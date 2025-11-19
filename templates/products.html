@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Products</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #0c4a6e, #1e293b);
+      color: #fff;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    h1 {
+      color: #facc15;
+      margin-top: 20px;
+    }
+
+    .back-btn {
+      background: #facc15;
+      color: #000;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 8px;
+      cursor: pointer;
+      margin-bottom: 20px;
+      font-weight: bold;
+    }
+    .back-btn:hover { background: #fde047; }
+
+    .container {
+      display: flex;
+      width: 90%;
+      max-width: 1100px;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    /* Product section */
+    .product-grid {
+      width: 70%;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .product-item {
+      display: flex;
+      align-items: center;
+      background: rgba(255,255,255,0.1);
+      margin-bottom: 15px;
+      padding: 15px;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.25);
+      transition: transform 0.2s ease;
+    }
+    .product-item:hover {
+      transform: translateY(-4px);
+    }
+
+    .product-info {
+      display: flex;
+      align-items: center;
+      width: 100%;
+      gap: 20px;
+    }
+
+    .product-info img {
+      width: 150px;
+      height: 150px;
+      object-fit: cover;
+      border-radius: 12px;
+      border: 3px solid #facc15;
+      flex-shrink: 0;
+    }
+
+    .product-details {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 8px;
+      flex-grow: 1;
+    }
+
+    .product-name {
+      font-weight: bold;
+      font-size: 1.1rem;
+    }
+
+    .product-price {
+      color: #facc15;
+      font-size: 1rem;
+    }
+
+    .controls {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 8px;
+    }
+
+    .controls button {
+      background: #facc15;
+      color: #000;
+      border: none;
+      padding: 8px 14px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+      font-size: 1rem;
+    }
+    .controls button:hover { background: #fde047; }
+
+    .controls span {
+      font-size: 1.1rem;
+      font-weight: bold;
+      color: #fff;
+      min-width: 25px;
+      text-align: center;
+    }
+
+    .product-total {
+      color: #facc15;
+      font-weight: bold;
+      font-size: 1.05rem;
+      text-align: right;
+      min-width: 160px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+    }
+
+    .product-calc {
+      font-size: 0.95rem;
+      color: #e0e0e0;
+      margin-bottom: 4px;
+    }
+
+    /* Order Summary */
+    .order-summary {
+      width: 28%;
+      background: rgba(255,255,255,0.15);
+      padding: 15px;
+      border-radius: 12px;
+      height: fit-content;
+      position: sticky;
+      top: 20px;
+    }
+
+    .summary-item {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 10px;
+    }
+
+    .total {
+      border-top: 1px solid #facc15;
+      padding-top: 10px;
+      margin-top: 10px;
+      font-weight: bold;
+    }
+
+    .add-product {
+      background: rgba(255,255,255,0.2);
+      border: 2px dashed #facc15;
+      color: #facc15;
+      font-size: 2rem;
+      text-align: center;
+      padding: 30px;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    .add-product:hover { background: rgba(255,255,255,0.3); }
+
+.edit-btn {
+  background: transparent;
+  border: 1px solid #facc15;
+  color: #facc15;
+  font-size: 0.85rem;
+  padding: 4px 8px;
+  border-radius: 6px;
+  cursor: pointer;
+  margin-left: 10px;
+  transition: 0.3s;
+}
+
+.edit-btn:hover {
+  background: #facc15;
+  color: #000;
+}
+
+
+.remove-btn 
+{
+  background: transparent;
+  border: 1px solid #ef4444;
+  color: #ef4444;
+  font-size: 0.85rem;
+  padding: 4px 8px;
+  border-radius: 6px;
+  cursor: pointer;
+  margin-left: 6px;
+  transition: 0.3s;
+}
+
+.remove-btn:hover {
+  background: #ef4444;
+  color: #000;
+}
+
+
+  </style>
+</head>
+<body>
+  <h1>Our Products</h1>
+
+  <button class="back-btn" onclick="window.location.href='{{ url_for('home') }}'">← Back to Home</button>
+
+  <div class="container">
+    <div class="product-grid" id="productGrid">
+      {% for p in products %}
+        <div class="product-item">
+          <div class="product-info">
+            <img src="{{ url_for('static', filename=p.image) }}" alt="{{ p.name }}">
+            <div class="product-details">
+              <div class="product-name">
+              {{ p.name }}
+              <button class="edit-btn" onclick="location.href='/edit_product/{{ p.id }}'">✎ Edit</button>
+              
+            </div>
+
+              <div class="product-price">Rs. {{ "%.2f"|format(p.price|float) }}</div>
+              <div class="controls">
+                <button onclick="changeQuantity('{{ p.id }}', -1)">-</button>
+                <span id="qty-{{ p.id }}">0</span>
+                <button onclick="changeQuantity('{{ p.id }}', 1)">+</button>
+              </div>
+            </div>
+            <div id="price-{{ p.id }}" class="product-total">
+              <div class="product-calc">0× {{ "%.2f"|format(p.price|float) }}</div>
+              <div class="product-final">= Rs. 0.00</div>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+      <div class="add-product" onclick="addNewProduct()">+</div>
+    </div>
+
+    <div class="order-summary">
+      <h2>Order Summary</h2>
+      <div id="summaryList"></div>
+      <div class="total">Total: Rs. <span id="grandTotal">0.00</span></div>
+      <form action="{{ url_for('order_summary') }}" method="post">
+        <input type="hidden" name="order_data" id="orderData">
+        <button type="submit" class="back-btn">Proceed</button>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    const products = {{ products | tojson }};
+    const quantities = {};
+    const summaryList = document.getElementById("summaryList");
+    const grandTotalEl = document.getElementById("grandTotal");
+    const orderDataInput = document.getElementById("orderData");
+
+    function changeQuantity(id, delta) {
+  id = id.toString(); // force to string
+  if (!quantities[id]) quantities[id] = 0;
+  quantities[id] = Math.max(0, quantities[id] + delta);
+
+  const product = products.find(p => p.id === id);
+  if (!product) return;
+
+  const qty = quantities[id];
+  const subtotal = qty * parseFloat(product.price);
+
+  document.getElementById(`qty-${id}`).innerText = qty;
+  document.querySelector(`#price-${id} .product-calc`).innerText =
+      `${qty} × ${product.price}`;
+  document.querySelector(`#price-${id} .product-final`).innerText =
+      `= Rs. ${subtotal.toFixed(2)}`;
+
+  updateSummary();
+}
+
+
+    function updateSummary() {
+      summaryList.innerHTML = "";
+      let total = 0;
+      const orderItems = [];
+      products.forEach(p => {
+        const qty = quantities[p.id] || 0;
+        if (qty > 0) {
+          const subtotal = p.price * qty;
+          total += subtotal;
+          orderItems.push({ name: p.name, quantity: qty, price: p.price });
+          const div = document.createElement("div");
+          div.className = "summary-item";
+          div.innerHTML = `<span>${p.name} x ${qty}</span><span>Rs. ${subtotal.toFixed(2)}</span>`;
+          summaryList.appendChild(div);
+        }
+      });
+      grandTotalEl.textContent = total.toFixed(2);
+      orderDataInput.value = JSON.stringify(orderItems);
+    }
+
+    function addNewProduct() {
+      window.location.href = "{{ url_for('add_product') }}";
+    }
+
+
+    function editProduct(id) 
+    {
+  // Redirect to Add Product page with the product id as query parameter
+  const url = new URL("{{ url_for('add_product') }}", window.location.origin);
+  url.searchParams.append("edit", id);
+  window.location.href = url;
+    }
+
+
+
+  </script>
+</body>
+</html>

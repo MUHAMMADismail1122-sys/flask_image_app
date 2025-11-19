@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Edit Product</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 2rem; background: #fafafa; }
+    form { max-width: 400px; background: white; padding: 20px; border-radius: 12px; box-shadow: 0 0 10px #ddd; }
+    input, textarea { width: 100%; margin-bottom: 12px; padding: 8px; border-radius: 6px; border: 1px solid #ccc; }
+    button { padding: 8px 14px; border: none; background: #3b82f6; color: white; border-radius: 6px; cursor: pointer; }
+    button:hover { background: #2563eb; }
+  </style>
+</head>
+<body>
+  <h2>Edit Product</h2>
+  <form method="POST" enctype="multipart/form-data">
+    <label>Name:</label>
+    <input type="text" name="name" value="{{ product.name }}" required>
+
+    <label>Price:</label>
+    <input type="text" name="price" value="{{ product.price }}" required>
+
+    <label>Description:</label>
+    <textarea name="description"></textarea>
+
+    <label>Image:</label><br>
+    {% if product.image %}
+      <img src="{{ url_for('static', filename='images/' + product.image) }}" width="100"><br><br>
+    {% endif %}
+    <input type="file" name="image">
+
+    <button type="submit">Save Changes</button>
+  </form>
+</body>
+</html>

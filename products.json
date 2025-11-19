@@ -1,0 +1,51 @@
+[
+    {
+        "id": "34dfc487-7297-479d-ba46-0dd5dcba09b8",
+        "name": "pen",
+        "price": 125.0,
+        "description": "",
+        "image": "images/110.jpeg"
+    },
+    {
+        "id": "8cff1942-67ee-4286-b3ab-f71154a0c718",
+        "name": "shampoo",
+        "price": 500.0,
+        "description": ".",
+        "image": "images/435.jpeg"
+    },
+    {
+        "id": "28f6a36e-88d5-468b-a5d0-b69cb67195b5",
+        "name": "new soap",
+        "price": 50.0,
+        "description": "",
+        "image": "images/110.jpeg"
+    },
+    {
+        "id": "0ddcfe36-0129-4eca-96dc-f8f8ddee30a8",
+        "name": "cell",
+        "price": 150.0,
+        "description": "",
+        "image": "images/410.jpeg"
+    },
+    {
+        "id": "8c5b4c1f-572d-4556-b417-d36ba9fc7096",
+        "name": "polish",
+        "price": 750.0,
+        "description": "",
+        "image": "images/85.jpeg"
+    },
+    {
+        "id": "3f7c21cb-0c6a-4c48-8179-2982506a5b0d",
+        "name": "polish",
+        "price": 600.0,
+        "description": ".",
+        "image": "images/435.jpeg"
+    },
+    {
+        "id": "a72f5f0e-e99d-4260-91ac-12c764ba7103",
+        "name": "polish",
+        "price": 1000000.0,
+        "description": ".",
+        "image": "images/440.jpeg"
+    }
+]

@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block title %}Login | Mughal Traders{% endblock %}
+{% block content %}
+<style>
+  .auth-box{max-width:420px;margin:50px auto;background:white;padding:25px;border-radius:12px;
+  box-shadow:0 6px 18px rgba(0,0,0,0.1)}
+  input{width:100%;padding:10px;margin:8px 0;border:1px solid #ccc;border-radius:8px}
+  button{width:100%;padding:10px;background:var(--accent);color:white;border:none;border-radius:8px;cursor:pointer;font-weight:600}
+  button:hover{background:var(--primary)}
+  .alt{text-align:center;margin-top:10px}
+</style>
+<div class="auth-box">
+  <h2 style="text-align:center;color:var(--primary)">Login</h2>
+  <form method="POST">
+    <label>Username</label>
+    <input type="text" name="username" required>
+    <label>Password</label>
+    <input type="password" name="password" required>
+    <button type="submit">Login</button>
+  </form>
+  <div class="alt">Don’t have an account? <a href="{{ url_for('register') }}">Register here</a></div>
+</div>
+{% endblock %}

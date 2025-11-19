@@ -1,0 +1,124 @@
+{% extends "base.html" %}
+{% block title %}Home | Mughal Traders{% endblock %}
+{% block content %}
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #0c4a6e, #1e293b);
+    color: #fff;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+  }
+
+  .home-header {
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+  }
+
+  .home-header h1 {
+    margin: 0;
+    font-size: 36px;
+    color: #facc15;
+  }
+
+  .home-header p {
+    margin: 6px 0 0 0;
+    color: #e5e7eb;
+  }
+
+  /* Slider */
+  .slider-wrap {
+    width: 90%;
+    max-width: 1200px;
+    margin: 25px auto;
+    overflow: hidden;
+    border-radius: 14px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+    border: 2px solid #facc15;
+  }
+
+  .slides {
+    display: flex;
+    width: 500%;
+    transition: transform 0.9s ease;
+  }
+
+  .slides img {
+    width: 20%;
+    height: 350px;
+    object-fit: cover;
+    display: block;
+  }
+
+  /* Bottom section */
+  .bottom-section {
+    text-align: center;
+    margin: 50px 0 60px;
+  }
+
+  .bottom-section h2 {
+    color: #facc15;
+    margin-bottom: 20px;
+  }
+
+  .try-btn,
+  .promo-btn {
+    display: inline-block;
+    background: #facc15;
+    color: #000;
+    padding: 12px 26px;
+    border-radius: 10px;
+    text-decoration: none;
+    font-weight: 600;
+    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.25);
+    margin: 10px;
+    transition: all 0.2s ease;
+  }
+
+  .try-btn:hover,
+  .promo-btn:hover {
+    background: #fde047;
+    transform: translateY(-3px);
+  }
+</style>
+
+<div class="home-header">
+  <h1>Welcome to Mughal Traders</h1>
+  <p>Your reliable market partner for quality goods</p>
+</div>
+
+<div class="slider-wrap" aria-hidden="false">
+  <div class="slides" id="slides">
+    <img src="{{ url_for('static', filename='images/slider1.jpg') }}" alt="slide1">
+    <img src="{{ url_for('static', filename='images/slider2.jpg') }}" alt="slide2">
+    <img src="{{ url_for('static', filename='images/slider3.jpg') }}" alt="slide3">
+    <img src="{{ url_for('static', filename='images/slider4.jpg') }}" alt="slide4">
+    <img src="{{ url_for('static', filename='images/slider5.jpg') }}" alt="slide5">
+  </div>
+</div>
+
+<div class="bottom-section">
+  <h2>Your Trading Partner for Success</h2>
+  <a href="{{ url_for('products') }}" class="try-btn">Shopping</a>
+  <a href="{{ url_for('promotions') }}" class="promo-btn">Promotions</a>
+</div>
+
+<script>
+  // Simple CSS-animated slider (right-to-left feel)
+  (function () {
+    const slides = document.getElementById('slides');
+    const count = slides.children.length;
+    let idx = 0;
+    function step() {
+      idx = (idx + 1) % count;
+      slides.style.transform = `translateX(-${idx * (100 / count)}%)`;
+    }
+    setInterval(step, 3500); // adjust speed (ms)
+  })();
+</script>
+{% endblock %}

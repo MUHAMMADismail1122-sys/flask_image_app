@@ -1,0 +1,110 @@
+{% extends 'base.html' %}
+{% block content %}
+<style>
+  body {
+    background: linear-gradient(135deg, #0c4a6e, #1e293b);
+    font-family: Arial, sans-serif;
+  }
+
+  .summary-container {
+    max-width: 900px;
+    margin: 40px auto;
+    background: white;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  }
+
+  h2 {
+    color: #0d47a1;
+    text-align: center;
+    margin-bottom: 25px;
+  }
+
+  .item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid #eee;
+    padding: 10px 0;
+  }
+
+  .item img {
+    width: 80px;
+    height: 80px;
+    border-radius: 10px;
+    margin-right: 20px;
+  }
+
+  .item-details {
+    flex: 1;
+  }
+
+  .item-details h4 {
+    margin: 0;
+    color: #333;
+  }
+
+  .item-details p {
+    color: #666;
+  }
+
+  .item-total {
+    font-size: 16px;
+    color: #0d47a1;
+    font-weight: bold;
+  }
+
+  .total {
+    text-align: right;
+    font-size: 20px;
+    color: #0d47a1;
+    margin-top: 25px;
+  }
+
+  .back-btn {
+    background-color: #42a5f5;
+    color: white;
+    border: none;
+    padding: 10px 18px;
+    border-radius: 6px;
+    cursor: pointer;
+    display: block;
+    margin: 30px auto 0;
+  }
+
+  .back-btn:hover {
+    background-color: #1e88e5;
+  }
+</style>
+
+<div class="summary-container">
+  <h2>Order Summary</h2>
+
+  {% if items %}
+    {% for item in items %}
+    <div class="item">
+      <div class="item-details">
+        <h4>{{ item.name }}</h4>
+        <p>Price: Rs {{ item.price }}</p>
+      </div>
+
+      <!-- Show quantity and total calculation -->
+      <div class="item-total">
+        {{ item.quantity }} x {{ item.price }} = Rs {{ (item.price | float) * (item.quantity | int) }}
+      </div>
+    </div>
+    {% endfor %}
+  {% else %}
+    <p style="text-align:center;">No items found in your order.</p>
+  {% endif %}
+
+  <div class="total">
+    <strong>Total: Rs {{ total_price }}</strong>
+  </div>
+
+  <form action="{{ url_for('products') }}">
+    <button type="submit" class="back-btn">Back to Products</button>
+  </form>
+</div>
+{% endblock %}

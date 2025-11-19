@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Promotions</title>
+  
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg,#0c4a6e,#1e293b);
+      color:#fff;
+      margin:0;
+      padding:0;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      min-height:100vh;
+    }
+
+    h1 {
+      color:#facc15;
+      text-align:center;
+      margin:20px 0 10px;
+    }
+
+    .back-btn {
+      background:#facc15;
+      color:#000;
+      border:none;
+      padding:10px 20px;
+      border-radius:8px;
+      cursor:pointer;
+      font-weight:bold;
+      margin-bottom:20px;
+      transition:0.3s;
+    }
+    .back-btn:hover { background:#fde047; }
+
+    .grid {
+      width:90%;
+      max-width:1100px;
+      margin:0 auto;
+      display:grid;
+      grid-template-columns:repeat(auto-fill,minmax(300px,1fr));
+      gap:20px;
+    }
+
+    .card {
+      background:rgba(255,255,255,0.08);
+      border-radius:12px;
+      padding:16px;
+      box-shadow:0 4px 10px rgba(0,0,0,0.25);
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      transition:transform 0.2s ease;
+    }
+    .card:hover { transform:translateY(-4px); }
+
+    .card img {
+      width:100%;
+      height:240px;
+      object-fit:cover;
+      border-radius:10px;
+      border:3px solid #facc15;
+    }
+
+    .name {
+      font-weight:700;
+      margin-top:10px;
+      color:#facc15;
+      text-align:center;
+      font-size:1.2rem;
+    }
+
+    .price {
+      font-size:1rem;
+      color:#22c55e;
+      font-weight:600;
+      margin-top:4px;
+    }
+
+    .desc {
+      color:#e6eef9;
+      margin-top:8px;
+      font-size:0.95rem;
+      text-align:center;
+      min-height:48px;
+    }
+
+    .discount {
+      margin-top:6px;
+      font-weight:700;
+      color:#22c55e;
+    }
+
+    .controls {
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+      margin-top:10px;
+    }
+
+    .controls button {
+      background:#facc15;
+      color:#000;
+      border:none;
+      padding:6px 12px;
+      border-radius:6px;
+      cursor:pointer;
+      font-weight:bold;
+      font-size:1.1rem;
+    }
+
+    .controls button:hover { background:#fde047; }
+
+    .controls span {
+      font-weight:bold;
+      min-width:25px;
+      text-align:center;
+      font-size:1.1rem;
+    }
+
+    .subtotal {
+      margin-top:6px;
+      color:#facc15;
+      font-weight:bold;
+      font-size:1rem;
+      text-align:center;
+    }
+
+    /* 🧾 Order Summary section */
+    .summary {
+      background:rgba(255,255,255,0.1);
+      margin-top:30px;
+      width:90%;
+      max-width:800px;
+      padding:20px;
+      border-radius:10px;
+      box-shadow:0 0 10px rgba(0,0,0,0.25);
+    }
+
+    .summary h2 {
+      text-align:center;
+      color:#facc15;
+      margin-bottom:10px;
+    }
+
+    .summary table {
+      width:100%;
+      border-collapse:collapse;
+      margin-top:10px;
+    }
+
+    .summary th, .summary td {
+      border-bottom:1px solid rgba(255,255,255,0.2);
+      padding:8px;
+      text-align:center;
+      font-size:0.95rem;
+    }
+
+    .summary th {
+      color:#facc15;
+      font-weight:bold;
+    }
+
+    .total {
+      font-weight:bold;
+      color:#22c55e;
+      text-align:right;
+      margin-top:10px;
+    }
+
+  </style>
+</head>
+<body>
+  <h1>Current Promotions</h1>
+
+  <!-- 🟡 Back to Home button -->
+  <button class="back-btn" onclick="window.location.href='{{ url_for('home') }}'">← Back to Home</button>
+
+  <div class="grid">
+    {% for promo in promotions %}
+      <div class="card">
+        <img src="{{ url_for('static', filename=promo.image) }}" alt="{{ promo.name }}">
+        <div class="name">{{ promo.name }}</div>
+        <div class="price">Rs. {{ promo.price }}</div>
+        <div class="desc">{{ promo.description }}</div>
+        <div class="discount">Save {{ promo.discount }}%</div>
+
+        <div class="controls">
+          <button onclick="changeQty('{{ promo.id }}', -1)">–</button>
+          <span id="qty-{{ promo.id }}">0</span>
+          <button onclick="changeQty('{{ promo.id }}', 1)">+</button>
+        </div>
+
+        <div id="sub-{{ promo.id }}" class="subtotal">Total: 0 × {{ promo.price }} = Rs. 0.00</div>
+      </div>
+      
+    {% endfor %}
+    <div class="promo-item add-promo" onclick="window.location.href='{{ url_for('add_promotion') }}'">
+  <div class="promo-content">
+    <h2>➕ Add New Promotion</h2>
+  </div>
+</div>
+
+
+    {% if promotions|length == 0 %}
+      <p style="text-align:center; color:#ddd;">No promotions found.</p>
+    {% endif %}
+  </div>
+
+  <!-- 🧾 Order Summary Section -->
+  <div class="summary">
+    <h2>Order Summary</h2>
+    <table id="orderTable">
+      <thead>
+        <tr>
+          <th>Product</th>
+          <th>Qty</th>
+          <th>Price</th>
+          <th>Total</th>
+        </tr>
+      </thead>
+      <tbody id="orderBody"></tbody>
+    </table>
+    <div class="total" id="grandTotal">Grand Total: Rs. 0.00</div>
+  </div>
+
+  <script>
+    const promotions = {{ promotions | tojson }};
+    const quantities = {};
+
+    function changeQty(id, delta) {
+      id = id.toString();
+      if (!quantities[id]) quantities[id] = 0;
+      quantities[id] = Math.max(0, quantities[id] + delta);
+
+      const promo = promotions.find(p => p.id === parseInt(id));
+      if (!promo) return;
+
+      const qty = quantities[id];
+      const price = parseFloat(promo.price) || 0;
+      const subtotal = qty * price;
+
+      // Update quantity and subtotal under each card
+      document.getElementById(`qty-${id}`).innerText = qty;
+      document.getElementById(`sub-${id}`).innerText =
+        `Total: ${qty} × ${price} = Rs. ${subtotal.toFixed(2)}`;
+
+      updateSummary();
+    }
+
+    function updateSummary() {
+      const orderBody = document.getElementById('orderBody');
+      orderBody.innerHTML = '';
+
+      let grandTotal = 0;
+
+      for (const id in quantities) {
+        const qty = quantities[id];
+        if (qty > 0) {
+          const promo = promotions.find(p => p.id === parseInt(id));
+          if (!promo) continue;
+
+          const price = parseFloat(promo.price);
+          const total = qty * price;
+          grandTotal += total;
+
+          const row = document.createElement('tr');
+          row.innerHTML = `
+            <td>${promo.name}</td>
+            <td>${qty}</td>
+            <td>Rs. ${price}</td>
+            <td>Rs. ${total.toFixed(2)}</td>
+          `;
+          orderBody.appendChild(row);
+        }
+      }
+
+      document.getElementById('grandTotal').innerText =
+        `Grand Total: Rs. ${grandTotal.toFixed(2)}`;
+    }
+  </script>
+</body>
+</html>

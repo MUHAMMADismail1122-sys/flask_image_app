@@ -1,0 +1,43 @@
+[
+    {
+        "id": 1,
+        "name": "shampoo",
+        "description": "",
+        "price": 512.0,
+        "image": "promotions/cc3689c4ab594d268f12559d2f604014_435.jpeg"
+    },
+    {
+        "id": 2,
+        "name": "pen",
+        "description": "",
+        "price": 510.0,
+        "image": "promotions/8a2fbcb0a09140a19647f671bbbe27b5_130.jpeg"
+    },
+    {
+        "id": 3,
+        "name": "shampoo",
+        "price": 11.0,
+        "saving": 11.0,
+        "quantity": 1,
+        "description": ".",
+        "image": "uploads/640 - Copy.jpeg"
+    },
+    {
+        "id": 4,
+        "name": "check",
+        "price": 2000.0,
+        "saving": 12.0,
+        "quantity": 4,
+        "description": "this is just to check ",
+        "image": "uploads/griditem7.jpg"
+    },
+    {
+        "id": 5,
+        "name": "lux soap bumper offer",
+        "price": 2500.0,
+        "saving": 12.0,
+        "quantity": 72,
+        "description": "This is just limited offer for 2 days left. ",
+        "image": "uploads/110.jpeg"
+    }
+]

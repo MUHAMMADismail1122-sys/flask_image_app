@@ -1,0 +1,64 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>{% block title %}Mughal Traders{% endblock %}</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <style>
+    :root{
+      --primary:#0277bd;
+      --accent:#0288d1;
+      --light:#e1f5fe;
+      --shadow:rgba(0,0,0,0.15);
+      --error:#d32f2f;
+      --success:#2e7d32;
+    }
+    body{margin:0;background:linear-gradient(135deg,#cfe9ff,#b3d4fc);font-family:"Segoe UI",sans-serif;color:#09324a}
+    header{
+      background:linear-gradient(90deg,var(--primary),var(--accent));
+      color:white;padding:12px 22px;display:flex;justify-content:space-between;align-items:center;
+      box-shadow:0 3px 12px var(--shadow);
+    }
+    .brand{font-weight:bold;font-size:20px}
+    nav a{color:white;text-decoration:none;margin-left:12px;padding:6px 10px;border-radius:8px}
+    nav a:hover{background:rgba(255,255,255,0.15)}
+    main{padding:20px;max-width:1200px;margin:0 auto;}
+    footer{text-align:center;padding:10px;color:#073047;opacity:0.8}
+    .flash{padding:10px;margin:10px 0;border-radius:8px;}
+    .flash.error{background:#ffcdd2;color:var(--error)}
+    .flash.success{background:#c8e6c9;color:var(--success)}
+  </style>
+</head>
+<body>
+  <header>
+    <div class="brand">Mughal Traders</div>
+    <nav>
+      <a href="{{ url_for('home') }}">Home</a>
+      {% if session.get('username') %}
+        <a href="{{ url_for('products') }}">Products</a>
+        <a href="{{ url_for('order_summary') }}">Order Summary</a>
+        <a href="{{ url_for('logout') }}">Logout ({{ session['username'] }})</a>
+      {% else %}
+        <a href="{{ url_for('login') }}">Login</a>
+        <a href="{{ url_for('register') }}">Register</a>
+      {% endif %}
+    </nav>
+  </header>
+
+  <main>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        {% for cat, msg in messages %}
+          <div class="flash {{ cat }}">{{ msg }}</div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+
+    {% block content %}{% endblock %}
+  </main>
+
+  <footer>
+    © 2025 Mughal Traders — All Rights Reserved
+  </footer>
+</body>
+</html>
