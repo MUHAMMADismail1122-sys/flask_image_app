@@ -1,0 +1,46 @@
+# Byte-compiled / optimized
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environment
+venv/
+env/
+.venv/
+ENV/
+
+# Distribution / packaging
+build/
+dist/
+*.egg-info/
+
+# IDE / Editor
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Python tools
+pip-log.txt
+pip-delete-this-directory.txt
+htmlcov/
+.coverage
+.tox/
+.pytest_cache/
+.coverage.*
+
+# Secrets / local settings
+instance/
+*.env
+.env
+
+# Static uploads (if you don't want to track runtime uploads)
+# static/uploads/
+# static/images/
+
+# Git
+.gitignore
